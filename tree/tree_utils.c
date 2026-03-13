@@ -101,22 +101,20 @@ void sidePrint(Node *node, void *context) {
     int *depth = context;
 
     for (int i = 0; i < *depth; i++) printf("  ");
-    printf("- %d\n", node->value);
+    printf("- %d\n", node->nextBrat->value);
 }
 
 // internal fun uses only for printTree
-void releasePrint(Node *node, void *context) {
-    if (node->nextBrat == NULL) {
-        int *depth = context;
-        (*depth)--;
-    }
+void upPrint(Node *_, void *context) {
+    int *depth = context;
+    (*depth)--;
 }
 
 void printTreeDirectory(Node *root) {
     if (root == 0) return;
     printf("- root\n");
     int depth = 0;
-    traversePostOrderRelease(root, downPrint, sidePrint, releasePrint, &depth);
+    traversePostOrder(root, downPrint, sidePrint, upPrint, &depth);
 }
 
 int nodeDegree(Node *node) {
@@ -140,7 +138,7 @@ void countUp_CountNodeDegreeEqValue(Node *node, void *context) {
 int countNodesDegreeEqValue(Node *root) {
     if (root == NULL) return 0;
     int count = 0;
-    traversePostOrderRelease(root, NULL, NULL, countUp_CountNodeDegreeEqValue, &count);
+    traversePostOrder(root, NULL, NULL, countUp_CountNodeDegreeEqValue, &count);
     return count;
 }
 

@@ -43,7 +43,7 @@ void updateCopiedStackItem(Stack *stack, DataType item) {
     stackPush(stack, item);
 }
 
-void traversePostOrderRelease(Node *root, const Fun down, const Fun side, const Fun release, void *context) {
+void traversePostOrder(Node *root, const Fun down, const Fun side, const Fun up, void *context) {
     if (root == NULL) { return; }
 
     Stack *s = stackCreate();
@@ -61,14 +61,16 @@ void traversePostOrderRelease(Node *root, const Fun down, const Fun side, const 
                 if (down != NULL) down(node->firstChild, context);
             }
         } else if (item.state == NODE_CHILDREN_PROCESSED) {
-            updateCopiedStackItem(s, (DataType){node, NODE_PROCESSED});
             if (node->nextBrat != NULL) {
+                stackPop(s);
                 stackPush(s, (DataType){node->nextBrat, NODE_NEW});
-                if (side != NULL) side(node->nextBrat, context);
+                if (side != NULL) side(node, context);
+            } else {
+                updateCopiedStackItem(s, (DataType){node, NODE_PROCESSED});
             }
         } else {
             stackPop(s);
-            if (release != NULL) { release(node, context); }
+            if (up != NULL) { up(node, context); }
         }
     }
     stackDestroy(s);
@@ -96,5 +98,5 @@ void freeNode(Node *node, void *_) {
 }
 
 void deleteTree(Node *root) {
-    traversePostOrderRelease(root, NULL, NULL, freeNode, NULL);
+    traversePostOrder(root, NULL, freeNode, NULL, NULL);
 }
