@@ -8,9 +8,9 @@
 
 #include "../tree/tree.h"
 
-void addChildValueToPath(Node *root, const char *path, int value);
+void addChildValueToPath(Node *root, char *path, int value);
 
-void deleteNodeByPath(Node *root, const char *path);
+void deleteNodeByPath(Node *root, char *path);
 
 void printTree(Node *root, bool pretty);
 

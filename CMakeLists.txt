@@ -7,4 +7,9 @@ add_executable(tree main.c
         tree/tree.c
         tree/tree.h
         cli/cli.c
-        cli/cli.h)
+        cli/cli.h
+        utils/utils.c
+        utils/utils.h
+        stack/stack.c
+        stack/stack.h
+)
