@@ -63,7 +63,6 @@ void traversePostOrder(Node *root, const Fun down, const Fun side, const Fun up,
         } else if (item.state == NODE_CHILDREN_PROCESSED) {
             updateCopiedStackItem(s, (DataType){node, NODE_PROCESSED});
             if (node->nextBrat != NULL) {
-                stackPop(s);
                 stackPush(s, (DataType){node->nextBrat, NODE_NEW});
                 if (side != NULL) side(node->nextBrat, context);
             }

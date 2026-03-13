@@ -105,9 +105,11 @@ void sidePrint(Node *node, void *context) {
 }
 
 // internal fun uses only for printTree
-void upPrint(Node *_, void *context) {
-    int *depth = context;
-    (*depth)--;
+void upPrint(Node *node, void *context) {
+    if (node->nextBrat == NULL) {
+        int *depth = context;
+        (*depth)--;
+    }
 }
 
 void printTreeDirectory(Node *root) {
