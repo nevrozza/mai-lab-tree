@@ -138,7 +138,7 @@ void countUp_CountNodeDegreeEqValue(Node *node, void *context) {
 int countNodesDegreeEqValue(Node *root) {
     if (root == NULL) return 0;
     int count = 0;
-    traversePostOrder(root, NULL, NULL, countUp_CountNodeDegreeEqValue, &count);
+    traversePostOrder(root, NULL, countUp_CountNodeDegreeEqValue, countUp_CountNodeDegreeEqValue, &count);
     return count;
 }
 

@@ -37,12 +37,6 @@ void addNode(Node *parent, Node *newNode) {
     }
 }
 
-// internal fun uses only for traversePostOrder
-void updateCopiedStackItem(Stack *stack, DataType item) {
-    stackPop(stack);
-    stackPush(stack, item);
-}
-
 void traversePostOrder(Node *root, const Fun down, const Fun side, const Fun up, void *context) {
     if (root == NULL) { return; }
 
@@ -55,22 +49,21 @@ void traversePostOrder(Node *root, const Fun down, const Fun side, const Fun up,
 
 
         if (item.state == NODE_NEW) {
-            updateCopiedStackItem(s, (DataType){node, NODE_CHILDREN_PROCESSED});
+            stackPop(s);
+            stackPush(s, (DataType){node, NODE_CHILDREN_PROCESSED});
+
             if (node->firstChild != NULL) {
                 stackPush(s, (DataType){node->firstChild, NODE_NEW});
                 if (down != NULL) down(node->firstChild, context);
             }
         } else if (item.state == NODE_CHILDREN_PROCESSED) {
+            stackPop(s);
             if (node->nextBrat != NULL) {
-                stackPop(s);
                 stackPush(s, (DataType){node->nextBrat, NODE_NEW});
                 if (side != NULL) side(node, context);
             } else {
-                updateCopiedStackItem(s, (DataType){node, NODE_PROCESSED});
+                if (up != NULL) { up(node, context); }
             }
-        } else {
-            stackPop(s);
-            if (up != NULL) { up(node, context); }
         }
     }
     stackDestroy(s);
@@ -98,5 +91,5 @@ void freeNode(Node *node, void *_) {
 }
 
 void deleteTree(Node *root) {
-    traversePostOrder(root, NULL, freeNode, NULL, NULL);
+    traversePostOrder(root, NULL, freeNode, freeNode, NULL);
 }
