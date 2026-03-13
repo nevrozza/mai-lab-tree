@@ -12,10 +12,10 @@
 void printHelp() {
     printf("Команды:\n");
     printf("  sample               - заменить корень на заранее готовое дерево\n");
-    printf("  add <path> <value>   - добавить узел с value по пути\n");
-    printf("  del <path>           - удалить узел по пути\n");
+    printf("  add <path> <value>   - добавить ноду\n");
+    printf("  del <path>           - удалить ноду\n");
     printf("  print                - печать дерева\n");
-    printf("  solve                - подсчет узлов, где степень == value\n");
+    printf("  solve                - подсчет нод, где степень == значению\n");
     printf("  exit                 - выход\n");
 }
 
@@ -62,6 +62,8 @@ int main(void) {
             printf("Такой команды нет – введите 'help', чтобы вывести список команд\n");
         }
     }
+
+    printf("пока =/");
 
     return 0;
 }
