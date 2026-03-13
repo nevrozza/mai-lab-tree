@@ -54,16 +54,19 @@ void traversePostOrder(Node *root, const Fun down, const Fun side, const Fun up,
         Node *node = item.node;
 
 
-        if (node->firstChild != NULL && item.state == NODE_NEW) {
+        if (item.state == NODE_NEW) {
             updateCopiedStackItem(s, (DataType){node, NODE_CHILDREN_PROCESSED});
-
-            stackPush(s, (DataType){node->firstChild, NODE_NEW});
-            if (down != NULL) down(node->firstChild, context);
-        } else if (node->nextBrat != NULL && item.state != NODE_PROCESSED) {
+            if (node->firstChild != NULL) {
+                stackPush(s, (DataType){node->firstChild, NODE_NEW});
+                if (down != NULL) down(node->firstChild, context);
+            }
+        } else if (item.state == NODE_CHILDREN_PROCESSED) {
             updateCopiedStackItem(s, (DataType){node, NODE_PROCESSED});
-
-            stackPush(s, (DataType){node->nextBrat, NODE_NEW});
-            if (side != NULL) side(node->nextBrat, context);
+            if (node->nextBrat != NULL) {
+                stackPop(s);
+                stackPush(s, (DataType){node->nextBrat, NODE_NEW});
+                if (side != NULL) side(node->nextBrat, context);
+            }
         } else {
             stackPop(s);
             if (up != NULL) { up(node, context); }

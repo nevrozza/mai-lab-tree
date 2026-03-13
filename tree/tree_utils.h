@@ -23,4 +23,6 @@ int nodeDegree(Node *node);
 
 int countNodesDegreeEqValue(Node *root);
 
+void initSampleTree(Node *root);
+
 #endif //TREE_UTILS_H

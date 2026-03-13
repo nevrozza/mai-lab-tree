@@ -12,7 +12,7 @@ void addChildValueToPath(Node *root, char *path, int value);
 
 void deleteNodeByPath(Node *root, char *path);
 
-void printTree(Node *root, bool pretty);
+void printTree(Node *root);
 
 // Определить число вершин дерева, степень которых совпадает со значением элемента.
 void solve(Node *root);
