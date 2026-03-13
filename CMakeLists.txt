@@ -12,4 +12,6 @@ add_executable(tree main.c
         utils/utils.h
         stack/stack.c
         stack/stack.h
+        tree/tree_utils.c
+        tree/tree_utils.h
 )
