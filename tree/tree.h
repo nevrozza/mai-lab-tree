@@ -19,7 +19,9 @@ Node *createNode(int value);
 void addNode(Node *parent, Node *newNode);
 
 // Нельзя удалять ноду в down!!
-void traversePostOrder(Node *root, Fun down, Fun side, Fun up, void *context);
+// release, т.к. вызывается после "обработки ноды", т.е. сначала был проход слева-направо (side),
+// а потом справа-налево (release – отпускаем элемент (его можно удалять))
+void traversePostOrderRelease(Node *root, Fun down, Fun side, Fun release, void *context);
 
 void unboundNode(Node *from, Node *target);
 
